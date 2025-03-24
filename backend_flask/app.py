@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from firestore_init import db
+from backend_flask.firestore_init import db
 from datetime import datetime
 
 app = Flask(__name__)
