@@ -1,27 +1,42 @@
-"use client"; // Required for Next.js since we use browser APIs
+"use client";
 
-import { useState } from "react";
-import dynamic from "next/dynamic";
-
-// Dynamically import react-qr-scanner (to avoid SSR issues)
-const QrReader = dynamic(() => import("react-qr-scanner"), { ssr: false });
+import { useEffect, useState } from "react";
+import { Html5QrcodeScanner } from "html5-qrcode";
 
 const QRScanner = ({ onScanComplete, onClose }) => {
+  const [scanner, setScanner] = useState(null);
   const [error, setError] = useState(null);
 
-  // QR Scan success callback
-  const handleScan = (data) => {
-    if (data) {
-      onScanComplete(data.text); // Return scanned QR code
-      onClose(); // Close scanner after successful scan
-    }
-  };
+  useEffect(() => {
+    // Only initialize if no scanner exists
+    if (!scanner) {
+      const qrScanner = new Html5QrcodeScanner("qr-reader", {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+        rememberLastUsedCamera: true,
+      });
 
-  // Handle scan errors
-  const handleError = (err) => {
-    console.error("QR Scanner Error:", err);
-    setError("Camera access denied or not available.");
-  };
+      const successCallback = (decodedText) => {
+        onScanComplete(decodedText);
+        qrScanner.clear().catch(console.error);
+        onClose();
+      };
+
+      const errorCallback = (scanError) => {
+        console.warn("QR Scan Error:", scanError);
+      };
+
+      qrScanner.render(successCallback, errorCallback);
+      setScanner(qrScanner);
+    }
+
+    // Cleanup function
+    return () => {
+      if (scanner) {
+        scanner.clear().catch(console.error);
+      }
+    };
+  }, [onScanComplete, onClose, scanner]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80">
@@ -34,12 +49,7 @@ const QRScanner = ({ onScanComplete, onClose }) => {
         </button>
         <h2 className="text-lg font-bold text-center">Scan QR Code</h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
-        <QrReader
-          delay={300}
-          onError={handleError}
-          onScan={handleScan}
-          style={{ width: "100%", height: "auto" }}
-        />
+        <div id="qr-reader" className="w-full"></div>
       </div>
     </div>
   );
