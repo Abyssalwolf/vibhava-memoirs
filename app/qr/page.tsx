@@ -30,7 +30,7 @@ export default function QRHome() {
 
       {/* QR Code Section */}
       <div className="flex-1 flex flex-col items-center justify-center">
-        <h1 className="text-3xl font-semibold mb-6">Welcome to QR Scanner</h1>
+        
         <div className="bg-green-100/50 p-6 rounded-lg shadow-sm">
           <button onClick={() => router.push("/qr/scan")} className="qr-button">
             Scan QR Code

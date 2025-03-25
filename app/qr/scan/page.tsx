@@ -17,15 +17,20 @@ const ScanPage = () => {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-6" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>
-      <h1 className="text-3xl font-semibold mb-6">QR Code Scanner</h1>
+      
 
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md relative" style={{ borderRadius: '16px' }}>
         {scanResult ? (
           <div className="text-center">
-            <p className="text-green-600 font-semibold">Scanned Result:</p>
-            <p className="bg-gray-200 p-3 rounded-md mt-2 break-words">{scanResult}</p>
+            <p className="text-green-600 font-semibold">Project ID:</p>
+            <div className="bg-gray-200 p-3 rounded-lg mt-2 break-words shadow-md">
+              <p>{scanResult}</p>
+              {/* If the scanned result includes an image, you can display it here */}
+              {/* <img src={imageUrl} alt="Scanned Content" className="mt-2 rounded-lg" /> */}
+            </div>
             <button
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              className="mt-4 px-4 py-2 bg-green-500 text-white hover:bg-green-600"
+              style={{ borderRadius: '10px' }}
               onClick={() => setShowScanner(true)}
             >
               Scan Again

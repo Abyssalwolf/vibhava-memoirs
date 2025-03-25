@@ -35,8 +35,8 @@ export default function Login() {
     <main className="flex min-h-screen flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>
       <div className="relative w-full max-w-md p-8 border border-green-300 rounded-lg bg-white/10 backdrop-blur-sm">
         {/* Butterfly in top corner */}
-        <div className="absolute -top-10 -right-10">
-          <img src="/gifs/green.gif" alt="Butterfly" width={80} height={80} />
+        <div className="absolute -top-12 -right-10">
+          <img src="/gifs/green.gif" alt="Butterfly" width={100} height={100} />
         </div>
 
         {/* Vibhava Memoirs Logo */}
