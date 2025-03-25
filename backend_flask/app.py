@@ -1,8 +1,10 @@
-from flask import Flask, request, jsonify
-from backend_flask.firestore_init import db
+from flask import Flask, request, jsonify, render_template
+from firestore_init import db
 from datetime import datetime
+from flask_cors import CORS 
 
 app = Flask(__name__)
+CORS(app)
 
 # --- Helper Functions ---
 def get_user_by_username_or_email(username_or_email):
@@ -96,6 +98,77 @@ def scan_project():
     scan_ref.update({"order_index": len(user_scans)})
 
     return jsonify({"success": True}), 200
+
+@app.route("/api/metrics", methods=["GET"])
+def get_project_metrics():
+    """Fetch all projects with their scan counts."""
+    try:
+        # Get all projects
+        projects = db.collection("projects").stream()
+        metrics = []
+
+        for project in projects:
+            project_id = project.id
+            project_name = project.get("project_name")
+            
+            # Count scans for this project
+            scan_count = (
+                db.collection("scanLogs")
+                .where("project_id", "==", f"projects/{project_id}")
+                .count()
+                .get()[0]
+                [0]
+                .value
+            )
+
+            metrics.append({
+                "project_name": project_name,
+                "scan_count": scan_count
+            })
+
+        return jsonify(metrics), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route("/api/user/<string:user_id>/scans", methods=["GET"])
+def get_user_scans(user_id):
+    """Get all scan logs for a specific user with time formatted."""
+    try:
+        # Validate user exists
+        user_ref = db.collection("users").document(user_id)
+        if not user_ref.get().exists:
+            return jsonify({"error": "User not found"}), 404
+
+        # Query scan logs for this user
+        scans_ref = db.collection("scanLogs")
+        query = scans_ref.where("user_id", "==", f"users/{user_id}").stream()
+
+        scans = []
+        for doc in query:
+            scan_data = doc.to_dict()
+            
+            # Extract project ID from reference string
+            project_id = scan_data["project_id"].split("/")[-1]
+            
+            # Format timestamp to time-only string
+            scanned_time = scan_data["scanned_time"].strftime("%H:%M:%S")
+            
+            scans.append({
+                "order_index": scan_data["order_index"],
+                "project_id": project_id,
+                "scanned_time": scanned_time
+            })
+
+        return jsonify(scans), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route("/leaderboard")
+def leaderboard():
+    """Serve the leaderboard HTML page."""
+    return render_template("leaderboard.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
