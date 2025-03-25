@@ -11,7 +11,7 @@ export default function QRHome() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-4 gradient-background">
+    <main className="flex min-h-screen flex-col items-center p-4" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>
       {/* Header */}
       <div className="w-full max-w-4xl flex items-center justify-between mb-8 mt-4">
         <button onClick={handleBack} className="back-button">

@@ -16,7 +16,7 @@ const ScanPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-100">
+    <main className="flex flex-col items-center justify-center min-h-screen p-6" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>
       <h1 className="text-3xl font-semibold mb-6">QR Code Scanner</h1>
 
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
@@ -40,7 +40,7 @@ const ScanPage = () => {
           )
         )}
       </div>
-    </div>
+    </main>
   );
 };
 

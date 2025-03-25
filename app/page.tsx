@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { QrCode } from "lucide-react"
 
 export default function Home() {
   const router = useRouter()
@@ -11,7 +11,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4 gradient-background">
+    <main className="flex min-h-screen flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>
       <div className="relative flex flex-col items-center justify-center">
         {/* Vibhava Logo */}
         <div className="mb-4 flex items-center">
@@ -24,7 +24,7 @@ export default function Home() {
 
         {/* GIF of a butterfly */}
         <img
-          src="/gifs/borboletas-butterfly.gif"
+          src="/gifs/green.gif"
           alt="Butterfly"
           className="mt-8"
           onClick={handleButterflyClick}
@@ -33,4 +33,3 @@ export default function Home() {
     </main>
   )
 }
-
