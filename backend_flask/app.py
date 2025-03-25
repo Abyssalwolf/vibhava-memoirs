@@ -62,6 +62,7 @@ def register_or_recognize_user():
     })
     return jsonify({"user_id": user_ref.id}), 201
 
+
 @app.route("/api/scan", methods=["POST"])
 def scan_project():
     """Validate QR scan and log it."""
@@ -98,6 +99,7 @@ def scan_project():
     scan_ref.update({"order_index": len(user_scans)})
 
     return jsonify({"success": True}), 200
+
 
 @app.route("/api/metrics", methods=["GET"])
 def get_project_metrics():
