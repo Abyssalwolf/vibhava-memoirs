@@ -16,28 +16,30 @@ const ScanPage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6">
-      <h1 className="text-3xl font-semibold mb-4">QR Code Scanner</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gray-100">
+      <h1 className="text-3xl font-semibold mb-6">QR Code Scanner</h1>
 
-      {scanResult ? (
-        <div className="text-center">
-          <p className="text-green-600 font-semibold">Scanned Result:</p>
-          <p className="bg-gray-200 p-2 rounded-md mt-2">{scanResult}</p>
-          <button
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-            onClick={() => setShowScanner(true)}
-          >
-            Scan Again
-          </button>
-        </div>
-      ) : (
-        showScanner && (
-          <QRScanner
-            onScanComplete={handleScanComplete}
-            onClose={() => setShowScanner(false)}
-          />
-        )
-      )}
+      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+        {scanResult ? (
+          <div className="text-center">
+            <p className="text-green-600 font-semibold">Scanned Result:</p>
+            <p className="bg-gray-200 p-3 rounded-md mt-2 break-words">{scanResult}</p>
+            <button
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              onClick={() => setShowScanner(true)}
+            >
+              Scan Again
+            </button>
+          </div>
+        ) : (
+          showScanner && (
+            <QRScanner
+              onScanComplete={handleScanComplete}
+              onClose={() => setShowScanner(false)}
+            />
+          )
+        )}
+      </div>
     </div>
   );
 };
