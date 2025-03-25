@@ -3,7 +3,7 @@ from firebase_admin import credentials, firestore
 from datetime import datetime
 
 # Initialize Firebase Admin SDK (replace 'path/to/serviceAccountKey.json' with your key)
-cred = credentials.Certificate("firebase\_vibhava-61886-firebase-adminsdk-fbsvc-1b375b805a.json")
+cred = credentials.Certificate("firebase\i_vibhava-61886-firebase-adminsdk-fbsvc-1b375b805a.json")
 firebase_admin.initialize_app(cred)
 
 # Get Firestore client
