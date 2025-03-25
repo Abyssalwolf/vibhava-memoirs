@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { QrCode } from "lucide-react"
 
 export default function Login() {
   const router = useRouter()
@@ -31,6 +32,21 @@ export default function Login() {
     router.push("/qr")
   }
 
+  const handleBack = () => {
+    router.push("/")
+  }
+
+  const handleImageClick = () => {
+    // Reusing validation logic
+    if (!username.trim() || !email.trim()) {
+      setError("Please fill in all fields before proceeding.")
+    } else if (!email.includes("@")) {
+      setError("Please enter a valid email before proceeding.")
+    } else {
+      router.push("/qr")
+    }
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>
       <div className="relative w-full max-w-md p-8 border border-green-300 rounded-lg bg-white/10 backdrop-blur-sm">
@@ -39,12 +55,22 @@ export default function Login() {
           <img src="/gifs/green.gif" alt="Butterfly" width={100} height={100} />
         </div>
 
+        {/* Header */}
+        <div className="w-full max-w-4xl flex items-center justify-between mb-8 mt-4">
+          <button onClick={handleBack} className="back-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M12 19L5 12L12 5" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <div className="flex items-center justify-center w-full">
+            <img src="/images/vibhava logo 1.png" alt="Vibhava Logo" className="h-8" />
+          </div>
+          <div className="w-6"></div>
+        </div>
+
         {/* Vibhava Memoirs Logo */}
         <div className="text-center mb-8">
-          <div className="flex justify-center items-center">
-            <h1 className="text-2xl font-bold">Vibhava</h1>
-            <div className="ml-1 h-3 w-3 bg-green-400"></div>
-          </div>
           <h2 className="memoirs-text text-5xl mt-2">Memoirs</h2>
         </div>
 
@@ -73,9 +99,14 @@ export default function Login() {
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <div className="flex justify-end mt-8">
-            <button type="submit" className="next-button">
-              Next
-            </button>
+            <img
+              src="/images/Frame 1.png"
+              alt="Frame"
+              className="cursor-pointer"
+              width={80}
+              height={80}
+              onClick={handleImageClick}
+            />
           </div>
         </form>
       </div>

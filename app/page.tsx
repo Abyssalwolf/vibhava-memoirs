@@ -11,12 +11,12 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>
+<main className="flex min-h-screen flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>    
       <div className="relative flex flex-col items-center justify-center">
         {/* Vibhava Logo */}
         <div className="mb-4 flex items-center">
-          <h1 className="text-4xl font-bold">Vibhavaaaa</h1>
-          <div className="ml-1 h-4 w-4 bg-green-400"></div>
+          <img src="/images/vibhava logo 1.png" alt="Vibhava Logo" className="h-10" />
+          
         </div>
 
         {/* Memoirs Text */}
@@ -27,6 +27,8 @@ export default function Home() {
           src="/gifs/green.gif"
           alt="Butterfly"
           className="mt-8"
+          width={200}
+          height={200}
           onClick={handleButterflyClick}
         />
       </div>

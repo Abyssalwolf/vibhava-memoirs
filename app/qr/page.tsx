@@ -21,9 +21,9 @@ export default function QRHome() {
           </svg>
         </button>
         <div className="flex items-center">
-          <h1 className="text-xl font-bold">Vibhava</h1>
-          <div className="ml-1 h-2 w-2 bg-green-400"></div>
-          <h2 className="ml-2 text-xl">Innovation Summit</h2>
+          <img src="/images/vibhava logo 1.png" alt="Vibhava Logo" className="h-8" />
+          
+          <h2 className="ml-1 text-xl mt-3"><b>Innovation Summit</b></h2>
         </div>
         <div className="w-6"></div> {/* Empty div for spacing */}
       </div>
