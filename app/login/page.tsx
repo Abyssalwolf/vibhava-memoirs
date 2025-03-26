@@ -12,25 +12,22 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const handleRegistration = async () => {
-    // Basic validation - at least one field required
     if (!username.trim() && !email.trim()) {
       setError("Please provide either username or email");
       return false;
     }
 
-    // Email format validation if email is provided
     if (email.trim() && !email.includes("@")) {
       setError("Please enter a valid email");
       return false;
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/register", {
+      const response = await axios.post("https://backend-recapped.onrender.com/api/register", {
         username: username.trim(),
         email: email.trim(),
       });
 
-      // Handle successful responses
       if (response.status === 200 || response.status === 201) {
         const userId = response.data.user_id;
         localStorage.setItem("userId", userId);
@@ -40,15 +37,12 @@ export default function Login() {
 
       return false;
     } catch (err: any) {
-      // Handle API error responses
       if (err.response) {
         switch (err.response.status) {
           case 400:
-            if (err.response.data.error === "New users must provide both username and email") {
-              setError("New users must register with both username and email");
-            } else {
-              setError("Invalid request format");
-            }
+            setError(err.response.data.error === "New users must provide both username and email" 
+              ? "New users must register with both username and email"
+              : "Invalid request format");
             break;
           case 409:
             setError("User already exists");
@@ -63,15 +57,16 @@ export default function Login() {
     }
   };
 
-  // Unified form handler
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await handleRegistration();
   };
 
-  // Image click handler
-  const handleImageClick = async () => {
-    await handleRegistration();
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleRegistration();
+    }
   };
 
   const handleBack = () => {
@@ -86,13 +81,11 @@ export default function Login() {
           "linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))",
       }}
     >
-      <div className="relative w-full max-w-md p-8 border border-green-300 rounded-lg bg-white/10 backdrop-blur-sm">
-        {/* Butterfly in top corner */}
+      <div className="relative w-full max-w-md p-8 border border-green-300 rounded-lg bg-white/20 backdrop-blur-sm">
         <div className="absolute -top-12 -right-10">
           <img src="/gifs/green.gif" alt="Butterfly" width={100} height={100} />
         </div>
 
-        {/* Header */}
         <div className="w-full max-w-4xl flex items-center justify-between mb-8 mt-4">
           <button onClick={handleBack} className="back-button">
             <svg
@@ -128,12 +121,14 @@ export default function Login() {
           <div className="w-6"></div>
         </div>
 
-        {/* Vibhava Memoirs Logo */}
         <div className="text-center mb-8">
-          <h2 className="memoirs-text text-5xl mt-2">Memoirs</h2>
+          <img
+            src="https://i.ibb.co/pBDLKmxM/wrapped-1.png"
+            alt="Memoirs"
+            className="mx-auto w-32 h-auto"
+          />
         </div>
 
-        {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <input
@@ -142,6 +137,7 @@ export default function Login() {
               className="input-field"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              onKeyDown={handleKeyPress}
             />
           </div>
 
@@ -152,20 +148,22 @@ export default function Login() {
               className="input-field"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={handleKeyPress}
             />
           </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <div className="flex justify-end mt-8">
-            <img
-              src="/images/Frame 1.png"
-              alt="Frame"
-              className="cursor-pointer"
-              width={80}
-              height={80}
-              onClick={handleImageClick} // Corrected to use separate handler
-            />
+            <button type="submit" className="focus:outline-none">
+              <img
+                src="/images/Frame 1.png"
+                alt="Next"
+                className="cursor-pointer"
+                width={80}
+                height={80}
+              />
+            </button>
           </div>
         </form>
       </div>

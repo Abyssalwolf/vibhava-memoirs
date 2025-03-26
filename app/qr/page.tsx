@@ -21,16 +21,18 @@ export default function QRHome() {
           </svg>
         </button>
         <div className="flex items-center">
-          <img src="/images/vibhava logo 1.png" alt="Vibhava Logo" className="h-8" />
-          
+          <img 
+            src="/images/vibhava logo 1.png" 
+            alt="Vibhava Logo" 
+            className="h-8"
+          />
           <h2 className="ml-1 text-xl mt-3"><b>Innovation Summit</b></h2>
         </div>
-        <div className="w-6"></div> {/* Empty div for spacing */}
+        <div className="w-6"></div>
       </div>
 
       {/* QR Code Section */}
       <div className="flex-1 flex flex-col items-center justify-center">
-        
         <div className="bg-green-100/50 p-6 rounded-lg shadow-sm">
           <button onClick={() => router.push("/qr/scan")} className="qr-button">
             Scan QR Code
@@ -39,9 +41,13 @@ export default function QRHome() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer - Updated with image */}
       <div className="mt-auto mb-8">
-        <h2 className="memoirs-text text-5xl">Memoirs</h2>
+        <img
+          src="https://i.ibb.co/pBDLKmxM/wrapped-1.png"
+          alt="Memoirs"
+          className="w-32 h-auto"
+        />
       </div>
     </main>
   );
