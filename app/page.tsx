@@ -94,38 +94,51 @@ export default function Home() {
         }
       `}</style>
       
-      <main 
-        className="flex min-h-screen flex-col items-center justify-between p-4" 
-        style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5)), linear-gradient(to bottom left, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}
-      >    
-        <div className="relative flex flex-col items-center justify-center flex-1 w-full">
-          {/* Vibhava Logo */}
-          <div className="mb-4 flex items-center">
-            <img src="/images/vibhava logo 1.png" alt="Vibhava Logo" className="h-10" />
-          </div>
+      <main className="flex min-h-screen flex-col items-center justify-center p-4" style={{ background: 'linear-gradient(to top right, rgba(17, 219, 71, 0.5), white, rgba(17, 219, 71, 0.5))' }}>    
+      <div className="relative flex flex-col items-center justify-center">
+        {/* Vibhava Logo */}
+        <div className="mb-4 flex items-center">
+          <img src="/images/vibhava logo 1.png" alt="Vibhava Logo" className="h-10" />
+        </div>
 
-          {/* Memoirs Text */}
-          <h2 className="memoirs-text text-7xl mb-8">Memoirs</h2>
+        {/* Memoirs Logo */}
+        <img 
+          src="https://i.ibb.co/pBDLKmxM/wrapped-1.png" 
+          alt="Wrapped Logo"
+          className="mb-8 w-64 h-auto"
+        />
 
-          {/* GIF of a butterfly */}
+        {/* Pulsating circle container */}
+        <div className="relative flex items-center justify-center">
+          {/* Pulsating circle effect */}
+          
+          {/* Second pulsating circle for smoother effect */}
+          <div className="absolute animate-ping rounded-full bg-green-100 opacity-50" style={{
+            width: '240px',
+            height: '240px',
+            animationDuration: '1.5s',
+            animationDelay: '0s'
+          }}></div>
+
+          {/* Butterfly GIF */}
           <img
             src="/gifs/green.gif"
             alt="Butterfly"
-            className="mt-8"
+            className="relative z-10 cursor-pointer transition-transform hover:scale-105"
             width={200}
             height={200}
             onClick={handleButterflyClick}
           />
         </div>
-        
+      </div>
         {/* Footer */}
         <footer className="w-full py-4 text-center text-sm text-gray-600 mt-auto relative">
           <div className="container mx-auto">
-            <p>© {new Date().getFullYear()} Vibhava Memoirs. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Vibhava Wrapped. All rights reserved.</p>
             <div className="flex justify-center gap-4 mt-2">
-              <a href="#" className="hover:text-green-700 transition-colors">About</a>
+              {/* <a href="#" className="hover:text-green-700 transition-colors">About</a>
               <a href="#" className="hover:text-green-700 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-green-700 transition-colors">Contact</a>
+              <a href="#" className="hover:text-green-700 transition-colors">Contact</a> */}
             </div>
           </div>
           
@@ -177,12 +190,12 @@ export default function Home() {
                   <div className="absolute -bottom-2 left-0 w-full h-1 bg-green-400 rounded-full opacity-70"></div>
                 </span>
               </h3>
-              <p className="text-center text-green-600 mb-6 text-sm relative z-10">Meet the wizards behind Vibhava Memoirs</p>
+              <p className="text-center text-green-600 mb-6 text-sm relative z-10">Meet the wizards behind Vibhava Wrapped</p>
               
               <div className="space-y-4 relative z-10">
                 {[
                   { 
-                    name: "Shebin Thomas", 
+                    name: "Sebin Thomas", 
                     emoji: "⚙️", 
                     color: "bg-blue-100", 
                     role: "Backend Developer",
@@ -251,7 +264,7 @@ export default function Home() {
                 <p className="text-center text-green-600 text-sm mb-2">Together we create memories that last forever!</p>
                 <div className="text-center">
                   <span className="inline-block bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-medium shadow-md hover:shadow-lg transition-shadow cursor-pointer hover:from-green-600 hover:to-teal-600" onClick={toggleTeamPopup}>
-                    Back to Memoirs ✨
+                    Back to Wrapped ✨
                   </span>
                 </div>
               </div>

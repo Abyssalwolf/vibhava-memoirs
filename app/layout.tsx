@@ -14,7 +14,7 @@ const dancingScript = Dancing_Script({
 })
 
 export const metadata: Metadata = {
-  title: "Vibhava Memoirs",
+  title: "Vibhava ",
   description: "Vibhava Innovation Summit",
   generator: 'v0.dev'
 }
