@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { QrCode } from "lucide-react";
 
 export default function Login() {
   const router = useRouter();
@@ -12,70 +11,67 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
-  // Handle form submission
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // Simple validation
-    if (!username.trim() || !email.trim()) {
-      setError("Please fill in all fields");
-      return;
+  const handleRegistration = async () => {
+    // Basic validation - at least one field required
+    if (!username.trim() && !email.trim()) {
+      setError("Please provide either username or email");
+      return false;
     }
 
-    if (!email.includes("@")) {
+    // Email format validation if email is provided
+    if (email.trim() && !email.includes("@")) {
       setError("Please enter a valid email");
-      return;
+      return false;
     }
 
     try {
-      console.log("Sending data to backend...");
       const response = await axios.post("http://localhost:5000/api/register", {
-        username,
-        email,
+        username: username.trim(),
+        email: email.trim(),
       });
 
-      console.log("Data has been sent to backend");
-
-      if (response.status === 201) {
-        console.log("Registration successful");
-        setError("");
-        router.push("/qr"); 
+      // Handle successful responses
+      if (response.status === 200 || response.status === 201) {
+        const userId = response.data.user_id;
+        localStorage.setItem("userId", userId);
+        router.push("/qr");
+        return true;
       }
-    } catch (err) {
-      console.error("Registration failed:", err);
-      setError("Something went wrong. Please try again.");
+
+      return false;
+    } catch (err: any) {
+      // Handle API error responses
+      if (err.response) {
+        switch (err.response.status) {
+          case 400:
+            if (err.response.data.error === "New users must provide both username and email") {
+              setError("New users must register with both username and email");
+            } else {
+              setError("Invalid request format");
+            }
+            break;
+          case 409:
+            setError("User already exists");
+            break;
+          default:
+            setError("Something went wrong. Please try again.");
+        }
+      } else {
+        setError("Network error. Please check your connection.");
+      }
+      return false;
     }
   };
 
+  // Unified form handler
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await handleRegistration();
+  };
+
+  // Image click handler
   const handleImageClick = async () => {
-    if (!username.trim() || !email.trim()) {
-      setError("Please fill in all fields before proceeding.");
-      return;
-    }
-
-    if (!email.includes("@")) {
-      setError("Please enter a valid email before proceeding.");
-      return;
-    }
-
-    try {
-      console.log("Sending data to backend...");
-      const response = await axios.post("http://localhost:5000/api/register", {
-        username,
-        email,
-      });
-
-      console.log("Data has been sent to backend");
-
-      if (response.status === 201) {
-        console.log("Registration successful");
-        setError("");
-        router.push("/qr");
-      }
-    } catch (err) {
-      console.error("Error occurred:", err);
-      setError("Something went wrong. Please try again.");
-    }
+    await handleRegistration();
   };
 
   const handleBack = () => {
